@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Keyboard -> MainLoop: e=Keypress()
+MainLoop --> MainLoop: GetContext()
+autonumber 2.1.1
+MainLoop -> "Correct Handler": InterpretKey(e)
+'Handler -> MainLoop: SetIsAction
+MainLoop <-> ActionQueue: If isAction: ProcessUntilNext()
+autonumber 2.2
+MainLoop --> MainLoop: SwitchContext()
+autonumber 3
+MainLoop -> Renderer: UpdateWithContext(c)
+@enduml

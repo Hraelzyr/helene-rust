@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+MainLoop -> MainMenu: Keypress(e)
+MainMenu -> MainLoop: Save and quit if ^S
+@enduml

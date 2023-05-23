@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+PAH -> PAH: IdentifyKeyType
+autonumber 1.1 /' In case of movement press '/
+PAH <-> Map: QueryLocation\n (for bump attacks)
+autonumber 2
+PAH -> ActionQueue: AddAction
+@enduml

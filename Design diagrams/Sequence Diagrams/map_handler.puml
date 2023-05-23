@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+MapHandler -> MapHandler: MapKeyToLocation
+MapHandler --> MapHandler: GetNewActive
+autonumber 3.1.1
+MapHandler <-> Map: FindPathTo
+MapHandler -> ActionQueue: CommitPath /' When you move using map screen'/
+autonumber 3.2
+MapHandler --> MainLoop: SetNewActive /' When you move on the map screen '/
+autonumber 4
+MapHandler -> MainLoop: SetIsAction
+@enduml
