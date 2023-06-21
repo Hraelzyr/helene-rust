@@ -3,13 +3,13 @@
 
 autonumber
 
-MapHandler -> MapHandler: MapKeyToLocation
+'MapHandler -> MapHandler: MapKeyToLocation
 MapHandler --> MapHandler: GetNewActive
-autonumber 3.1.1
-MapHandler <-> Map: FindPathTo
-MapHandler -> ActionQueue: CommitPath /' When you move using map screen'/
-autonumber 3.2
-MapHandler --> MainLoop: SetNewActive /' When you move on the map screen '/
+'autonumber 3.1.1
+'MapHandler <-> Map: FindPathTo
+'MapHandler -> Signal: CommitPath /' When you move using map screen'/
+autonumber 3
+MapHandler --> Signal: SetNewActive /' When you move on the map screen '/
 autonumber 4
-MapHandler -> MainLoop: SetIsAction
+'MapHandler -> Signal: ProcessUntilNext
 @enduml

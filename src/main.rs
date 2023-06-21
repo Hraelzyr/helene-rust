@@ -1,14 +1,30 @@
-mod main_menu;
+use cursive::view::Resizable;
+use crate::terminal_vc::terminal_test::TestKR;
+use ron::{ser, de};
+use serde::{Deserialize, Serialize};
+use crate::terminal_vc::terminal_actual::Terminal;
 
-extern crate ferris_says;
+mod controller;
+mod game_state;
+mod actor;
+mod damage_types;
+mod terminal_vc;
+mod factions;
 
-use ferris_says::say;
-use std::io::{ stdout, BufWriter };
+#[derive(Serialize, Deserialize)]
+struct KilllaKill {
+    wow: i32,
+}
 
 fn main() {
-    let out = "Welcome to Helene!\nI am the Crab of Life and Death";
-    let width = 14;
+    let mut siv = cursive::default();
+    siv.add_layer(Terminal::new().full_screen());
+    siv.run();
 
-    let mut writer = BufWriter::new(stdout());
-    say(out, width, &mut writer).unwrap();
+    // let wow = KilllaKill {
+    //     wow: 0,
+    // };
+    //
+    // let out=ser::to_string(&wow).unwrap();
+    // println!("RON {}", out);
 }

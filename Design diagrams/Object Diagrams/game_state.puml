@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+object Map
+object Player
+object Level
+object Actors
+
+map GameState{
+Level *--> Map
+}
+@enduml

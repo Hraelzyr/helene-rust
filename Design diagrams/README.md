@@ -13,28 +13,31 @@ None have been made yet.
 
 #### Object Diagrams
 They explain how the classes interact with each other.  
-None have been made yet.
+They are located in 'Object Diagrams'.
 
-### Arguments for extensibility
+### Design and Reasoning
 
-Renderer is plugged in: 
-Any renderer that takes the locations of people and walls
-and blits it out is fine.
+This follows TEA model of GUI, with some elements of MVC.
 
-The Action Queue handles all the processing of actions.
-New actions can simply be implemented by changing the code
-in that file and adding some subscribers in its constructor.
+Why? We often perform I/O from the same context, 
+and so it makes sense to wrap them together.
+Further, I/O sends and receives messages from the model, 
+which readily maps to TEA.
 
-Each context has its own handler, and so:
-1. If a handler wants to expand the range of its commands,
-that is up to that handler.
-2. If a new handler needs to be added, we simply need to
-add the keys that transfer control to and from it.
-3. The reverse removes a handler (never giving control)
+Finally, most GUIs today follow TEA model, 
+and so adopting it means less work to get started.
 
-The Map stores both monsters on a level and the map of that
-level, which is sufficient to store and load a level.
+Faction details and other data is to be stored in external files
+(`.ini` as of now). This allows them to be
+modded/rebalanced without building anew.
+(Present in src/config to avoid conflict with user settings.)
 
-Flags in the MainLoop suffice to give it its control signals.
-Adding modifiers to those flags is sufficient to allow contexts
-to direct control flow.
+### Major Goals
+
+0. Working display and input (done in part)
+1. Working data storage (wip)
+   1.1. Config files to load creature specs
+   1.2. Savefiles using (likely) Serde
+2. Working game logic
+3. Faction implementation
+4. Story implementation

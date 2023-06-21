@@ -3,6 +3,8 @@
 
 autonumber
 
-MainLoop -> MainMenu: Keypress(e)
-MainMenu -> MainLoop: Save and quit if ^S
+Slot -> MainMenu: Input
+MainMenu -> Signal: Save and quit if sigsave/sigquit
+MainMenu -> Signal: Load game on sigload
+MainMenu -> Signal: New game on signew
 @enduml

@@ -3,10 +3,9 @@
 
 autonumber
 
-MainLoop -> ActionQueue: ProcessUntilNext()
-ActionQueue -> ActionQueue: Foreach a in ActionQueue s.t. delay a < delay player commit a
-ActionQueue -> ActionQueue: Commit player action and then SetNewActive
-ActionQueue --> ActionQueue: Prune stales
-ActionQueue -> ActionQueue: Foreach actor in mons & not in AQ register mons action
-ActionQueue -> MainLoop: Return control
+Slot -> ActionQueue: ProcessUntilNext
+ActionQueue -> ActionQueue: Foreach (actor, action) in aq, \ntake action and query new
+'ActionQueue -> ActionQueue: Commit player action and then SetNewActive
+'ActionQueue --> ActionQueue: Prune stales
+'ActionQueue -> Signal: Return control
 @enduml

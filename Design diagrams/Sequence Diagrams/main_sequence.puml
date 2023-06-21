@@ -3,14 +3,15 @@
 
 autonumber
 
-Keyboard -> MainLoop: e=Keypress()
-MainLoop --> MainLoop: GetContext()
-autonumber 2.1.1
-MainLoop -> "Correct Handler": InterpretKey(e)
-'Handler -> MainLoop: SetIsAction
-MainLoop <-> ActionQueue: If isAction: ProcessUntilNext()
-autonumber 2.2
-MainLoop --> MainLoop: SwitchContext()
+'RawKey -> KeyHandle: RawSignal
+Slot ->  ContextWrapper: InterpretKey
+ContextWrapper --> ContextWrapper: GetContext()
+autonumber 2.1
+ContextWrapper -> Signal: InterpretKeyWithContext
+'Handler -> ContextWrapper: SetIsAction
+'ContextWrapper <-> ActionQueue: If isAction: ProcessUntilNext()
+'autonumber 2.2
+ContextWrapper --> ContextWrapper: SwitchContext()
 autonumber 3
-MainLoop -> Renderer: UpdateWithContext(c)
+ContextWrapper -> Signal: UpdateWithContext
 @enduml
