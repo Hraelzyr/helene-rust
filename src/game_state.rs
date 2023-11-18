@@ -1,10 +1,8 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::Write;
-
+use std::fs;
 use serde::{Deserialize, Serialize};
 
-use crate::actor::Actor;
+use crate::actor::{Actor};
 
 const RANGE: u8 = 8;
 
@@ -20,20 +18,20 @@ pub(crate) struct Level {
 #[derive(Serialize, Deserialize)]
 pub(crate) struct GameState {
     levels: HashMap<u8, Level>,
-    player: Actor,
+    pub(crate) player: Actor,
     level: u8,
 }
 
 pub(crate) struct View {
     pub map: (String, u8, u8),
-    pub player: Option<Actor>,
+    pub player: Actor,
 }
+
 
 impl GameState {
     pub fn save(&self, path: &str) {
         let out = serde_json::ser::to_string(self).expect("Unable to serialise");
-        let mut file = File::create(path).expect("Unable to create a file at the given path!");
-        file.write_all(out.as_bytes()).expect("Unable to write");
+        fs::write(path, out).expect("Unable to create a file at the given path!");
     }
 
     pub fn gen_levels(&mut self, n: u8) {
@@ -56,7 +54,7 @@ impl GameState {
     pub fn send_message(&self) -> View {
         View {
             map: self.levels.get(&self.level).unwrap().gen_msg(),
-            player: Some(self.player.clone()),
+            player: self.player.clone(),
         }
     }
 }
@@ -80,6 +78,7 @@ impl Level {
         // println!("{}", size.1 as usize * size.0 as usize);
         String::from(".".repeat(size.1 as usize * size.0 as usize))
     }
+
 
     fn gen_msg(&self) -> (String, u8, u8) {
         (self.map.clone(), self.width, self.height)

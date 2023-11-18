@@ -1,18 +1,16 @@
-use std::fs::File;
 use serde::{Deserialize, Serialize};
 use crate::damage_types;
 use damage_types::Damage;
 use crate::damage_types::{DamageType, Resistances};
-use crate::damage_types::DamageType::Fire;
 use crate::factions::Faction;
-use crate::factions::Faction::Player;
 use std::fs;
-trait Vulnerable{
+
+pub(crate) trait Vulnerable{
     fn lower_hp(&mut self, damage: Damage) -> bool; //is dead?
     fn raise_hp(&mut self, heal: u16) -> (); //heals are type-less; no affinities
 }
 
-trait Movable{
+pub(crate) trait Movable{
     fn set_loc(&mut self, x: u8, y: u8) -> ();
     fn mov(&mut self, dx: i8, dy: i8) -> ();
 }
@@ -30,7 +28,6 @@ pub(crate) struct Actor {
 
 impl Actor{
     pub fn new_player() -> Self{
-
         ron::from_str::<Actor>(fs::read_to_string("src/config/player.ron").
             expect("Player config file absent").as_str()).unwrap()
     }

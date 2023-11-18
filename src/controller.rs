@@ -20,7 +20,7 @@ pub(crate) enum Message {
 pub(crate) struct Controller {
     context: Vec<Context>,
 
-    bump_move: Signal<((i8, i8),)>,
+    pub(crate) bump_move: Signal<((i8, i8),)>,
 
     map_move: Signal<((i8, i8),)>,
 
@@ -41,18 +41,19 @@ impl Controller{
             save_signal: Default::default(),
         }
     }
+
     pub(crate) fn interpret(&mut self, msg: Message) -> bool{
         let mut exit=false;
         match self.context.last().expect("Empty context stack") {
             MainMenu =>{
                 match msg {
                     Message::LoadKey => {
-                        self.load_signal.emit();
+                        //self.load_signal.emit();
                         self.context.push(Player);
                     }
 
                     Message::NewKey =>{
-                        self.new_signal.emit();
+                        //self.new_signal.emit();
                         self.context.push(Player);
                     }
 
@@ -100,4 +101,14 @@ impl Controller{
         }
         exit
     }
+
+    pub(crate) fn active_context(&self) -> &Context{
+        self.context.last().expect("Empty context stack")
+    }
+}
+
+#[test]
+fn test_bind(){
+    //let mut ctrl = Controller::new();
+    // ctrl.interpret()
 }

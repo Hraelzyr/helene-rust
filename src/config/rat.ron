@@ -1,0 +1,12 @@
+Actor(
+    mhp: 5,
+    hp: 5,
+    x: 0,
+    y: 0,
+    res: Resistances( phys_res: 0, fire_res: 0 ),
+    fac: Player,
+    atk: [Damage(
+        _type: Physical,
+        value: 2,
+    )]
+)
