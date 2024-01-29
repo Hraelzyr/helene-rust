@@ -19,3 +19,4 @@ debug=true
 [profile.release-lto]
 inherits="release"
 lto="thin"
+panic="abort"

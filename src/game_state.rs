@@ -6,13 +6,19 @@ use crate::actor::{Actor};
 
 const RANGE: u8 = 8;
 
+#[derive(Serialize, Deserialize, Clone)]
+enum Tile{
+    Floor,
+    Wall,
+}
+
 #[derive(Serialize, Deserialize)]
 pub(crate) struct Level {
-    map: String,
+    map: Vec<Tile>,
     width: u8,
     height: u8,
     contamination: u32,
-    playbill: Vec<Actor>,
+    playbill: HashMap<(u8, u8),Actor>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -70,13 +76,34 @@ impl Level {
             width: size.0,
             height: size.1,
             contamination: 0,
-            playbill: vec![],
+            playbill: HashMap::default(),
         }
     }
 
-    fn generate_empty(size: (u8, u8)) -> String {
-        // println!("{}", size.1 as usize * size.0 as usize);
-        String::from(".".repeat(size.1 as usize * size.0 as usize))
+    fn generate_empty(size: (u8, u8)) -> Vec<Tile> {
+        let (x, y) = size;
+        vec![Tile::Floor; (x*y) as usize]
+    }
+
+    fn map_to_string(&self, player: Actor) -> String{
+        let mut out = String::new();
+        let mut loc: u16=0;
+        for tile in self.map{
+            loc+=1;
+            match tile{
+                Tile::Floor => {
+                    if Level::in_los_empty(player.get_loc(), (0, 0)){
+                        out.push('.');
+                    }else {
+                        out.push('*');
+                    }
+                }
+                Tile::Wall => {
+                    out.push('#');
+                }
+            }
+        }
+        out
     }
 
 
